@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teléfonos Útiles - Concordia</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      color: white;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 660px;
+      background: linear-gradient(to bottom right, #404040, #303030);
+      border: 3px solid #444;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #f0f0f0;
+    }
+
+    .city-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .city {
+      font-size: 38px;
+      font-weight: 800;
+      background: linear-gradient(45deg, #1e90ff, #00bfff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1.5px;
+    }
+
+    #reloj {
+      font-size: 20px;
+      font-weight: bold;
+      color: #4fc3f7; /* Azul claro */
+      margin-left: 8px;
+    }
+
+    .display {
+      background: rgba(15, 15, 15, 0.65);
+      border: 1px solid #555;
+      border-radius: 16px;
+      padding: 18px;
+      min-height: 180px;
+      max-height: 300px;
+      margin-bottom: 22px;
+      font-size: 16px;
+      line-height: 1.5;
+      overflow-y: auto;
+      color: #e0e0e0;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .btn {
+      background: linear-gradient(to bottom, #505050, #383838);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 6px;
+      color: #eee;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      font-size: 13px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      color: white;
+    }
+
+    .btn-emergencia { background: linear-gradient(to bottom, #d32f2f, #b71c1c); }
+    .btn-farmacias { background: linear-gradient(to bottom, #2e7d32, #1b5e20); }
+    .btn-telefonos { background: linear-gradient(to bottom, #1565c0, #0d47a1); }
+
+    .btn-emergencia:hover { background: linear-gradient(to bottom, #f44336, #c62828); }
+    .btn-farmacias:hover { background: linear-gradient(to bottom, #388e3c, #2e7d32); }
+    .btn-telefonos:hover { background: linear-gradient(to bottom, #1976d2, #1565c0); }
+
+    .btn-volver {
+      display: inline-block;
+      background: rgba(30, 100, 180, 0.2);
+      color: #bbdfff;
+      border: 1px solid #4a80c0;
+      padding: 4px 10px;
+      border-radius: 8px;
+      margin-top: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .btn-volver:hover {
+      background: rgba(40, 120, 220, 0.3);
+      color: white;
+    }
+
+    /* Listado en dos columnas */
+    .listado-dos-columnas {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .item-lista {
+      margin-bottom: 12px;
+    }
+
+    /* Scroll */
+    .display::-webkit-scrollbar {
+      width: 7px;
+    }
+    .display::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 4px;
+    }
+    .display::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 4px;
+    }
+    .display::-webkit-scrollbar-thumb:hover {
+      background: #777;
+    }
+
+    .creditos {
+      position: absolute;
+      bottom: 10px;
+      right: 16px;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">Teléfonos Útiles</div>
+      <div class="city-container">
+        <div class="city">Concordia</div>
+        <div id="reloj">--:--:--</div>
+      </div>
+    </div>
+
+    <div class="display" id="visor">
+      Selecciona una opción: Emergencias, Farmacias de Turno o Teléfonos Útiles.
+    </div>
+
+    <div class="buttons">
+      <button class="btn btn-emergencia" id="btnEmergencias">🚨 Emergencias</button>
+      <button class="btn btn-farmacias" id="btnFarmacias">💊 Farmacias de Turno</button>
+      <button class="btn btn-telefonos" id="btnTelefonos">📞 Teléfonos Útiles</button>
+    </div>
+
+    <div class="creditos">cmz - Qwen</div>
+  </div>
+
+  <script>
+    const reparticiones = [
+      { nombre: "Hospital Delicia Concepción Masvernat", telefono: "(0345) 435-1135 / (0345) 425-2610" },
+      { nombre: "Hospital Felipe Heras", telefono: "(0345) 421-3580" },
+      { nombre: "Hospital Ramón Carrillo", telefono: "(0345) 422-3452 / (0345) 421-2607" },
+      { nombre: "Asistencia Pública", telefono: "(0345) 421-7284" },
+      { nombre: "CEM - Centro de Emergencias Médicas", telefono: "(0345) 421-5500" },
+      { nombre: "URMEC - Urgencias Médicas Concordia", telefono: "(0345) 422-4866" },
+      { nombre: "EMERCON - Emergencias Médicas", telefono: "(0345) 423-0266" },
+      { nombre: "Cruz Roja", telefono: "(0345) 421-3349" },
+      { nombre: "Defensa Civil", telefono: "(0345) 103" },
+      { nombre: "Ayuda al Niño", telefono: "(0345) 102 / (0345) 422-6300 / (0345) 422-7018" },
+      { nombre: "Emergencias Náuticas", telefono: "(0345) 106" },
+      { nombre: "Jefatura Departamental Concordia", telefono: "(0345) 421-3035" },
+      { nombre: "Bomberos Zapadores Concordia", telefono: "(0345) 100 / (0345) 421-4444" },
+      { nombre: "Bomberos Voluntarios Concordia", telefono: "(0345) 422-0000" },
+      { nombre: "Policía Federal Concordia", telefono: "(0345) 421-7369" },
+      { nombre: "Aduana Nacional", telefono: "(0345) 421-0773" },
+      { nombre: "Aduana Puerto Concordia", telefono: "(0345) 421-2404" },
+      { nombre: "Puente Internacional", telefono: "(0345) 421-0773" },
+      { nombre: "Represa Salto Grande - Relaciones Públicas", telefono: "(0345) 421-2600" },
+      { nombre: "CODESAL", telefono: "(0345) 423-0166" },
+      { nombre: "PAMI Concordia", telefono: "(0345) 138 / 0800-222-7264" },
+      { nombre: "ANSES Concordia", telefono: "(0345) 130" },
+      { nombre: "Terminal de Ómnibus", telefono: "(0345) 421-7235" },
+      { nombre: "Municipalidad de Concordia", telefono: "(0345) 421-0021" },
+      { nombre: "Tránsito Municipal", telefono: "(0345) 421-1512" },
+      { nombre: "Informes Turísticos", telefono: "(0345) 421-3905" },
+      { nombre: "Tribunales de Concordia", telefono: "(0345) 421-6252" },
+      { nombre: "Obras Sanitarias", telefono: "(0345) 422-4786" },
+      { nombre: "Farmacia Concordia", telefono: "(0345) 421-2990" },
+      { nombre: "Farmacia Vélez Sarsfield", telefono: "(0345) 421-3356" },
+      { nombre: "Farmacia Cruz Azul", telefono: "(0345) 421-2850" },
+      { nombre: "Farmacia Masvernat", telefono: "(0345) 425-1967" },
+      { nombre: "Farmacia Del Hípico", telefono: "(0345) 422-1372" },
+      { nombre: "Farmacia La Bianca", telefono: "(0345) 15-4030-8888" },
+      { nombre: "Farmacia Las Heras", telefono: "(0345) 421-0894" },
+      { nombre: "Coop. Eléctrica Concordia", telefono: "(0345) 421-8080 / (0345) 421-7145 / 0800-777-72332" }
+    ];
+
+    // Reloj
+    function actualizarReloj() {
+      const ahora = new Date();
+      const h = String(ahora.getHours()).padStart(2, '0');
+      const m = String(ahora.getMinutes()).padStart(2, '0');
+      const s = String(ahora.getSeconds()).padStart(2, '0');
+      document.getElementById('reloj').textContent = `${h}:${m}:${s}`;
+    }
+    setInterval(actualizarReloj, 1000);
+    actualizarReloj();
+
+    function restablecerVisor() {
+      document.getElementById('visor').innerHTML = 
+        'Selecciona una opción: Emergencias, Farmacias de Turno o Teléfonos Útiles.';
+    }
+
+    document.getElementById('btnEmergencias').onclick = () => {
+      document.getElementById('visor').innerHTML = `
+        <strong>📞 Emergencias en Concordia</strong><br><br>
+        1. <strong>Emergencias Médicas:</strong> 107 – (0345) 421-7284<br>
+        2. <strong>Jefatura Departamental:</strong> (0345) 421-3035<br>
+        3. <strong>Bomberos Voluntarios:</strong> (0345) 422-0000<br><br>
+        <div style="text-align: right;">
+          <a class="btn-volver" onclick="restablecerVisor()">← Volver</a>
+        </div>
+      `;
+    };
+
+    document.getElementById('btnFarmacias').onclick = () => {
+      window.open('https://guiadeconcordia.com/farmacias-de-turno/', '_blank');
+    };
+
+    document.getElementById('btnTelefonos').onclick = () => {
+      let html = '<strong>📞 Teléfonos Útiles de Concordia</strong><br><br>';
+      html += '<div class="listado-dos-columnas">';
+      reparticiones.forEach(item => {
+        html += `
+          <div class="item-lista">
+            <strong>${item.nombre}</strong><br>
+            📞 ${item.telefono}
+          </div>
+        `;
+      });
+      html += '</div>';
+      html += `<div style="text-align: right; margin-top: 16px;">
+                <a class="btn-volver" onclick="restablecerVisor()">← Volver</a>
+              </div>`;
+      document.getElementById('visor').innerHTML = html;
+    };
+  </script>
+</body>
+</html>

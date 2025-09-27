@@ -1,0 +1,21 @@
+{
+  "short_name": "Teléfonos Concordia",
+  "name": "Teléfonos Útiles - Concordia, ER",
+  "icons": [
+    {
+      "src": "icono-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icono-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "telefonos_utiles_concordia.html",
+  "background_color": "#2a2a2a",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#1e90ff"
+}
